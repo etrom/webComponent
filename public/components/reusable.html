@@ -26,7 +26,6 @@
 
             var submit = shadowRoot.querySelector('.submit');
             submit.addEventListener('click', function(e){
-                debugger;
                 var list = shadowRoot.querySelector('.list').children
                 var array = []
                 for (var i =0; i < list.length; i++){
@@ -39,10 +38,8 @@
             add.addEventListener('click', function(e){
                 var list = shadowRoot.querySelector('.list')
                 var val = shadowRoot.querySelector('input').value
-                debugger;
                 var items =[]
                 if(val !== ''){
-                    debugger;
                     items.push(val)
                     var item = document.createElement('div')
                     item.name = val
