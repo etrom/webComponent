@@ -1,0 +1,73 @@
+<template>
+    <form>
+        <input type="text" clas="input" value=""><button class="add">add</button>
+        <div class="list"></div>
+        <input type="submit" value="submit" class="submit"></button>
+    </form>
+</template>
+
+<script>
+    (function(window, document, undefined) {
+        // Refers to the "importer", which is index.html
+        var thatDoc = document;
+        // Refers to the "importee", which is src/reusable.html
+        var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+        // Gets content from <template>
+        var template = thisDoc.querySelector('template').content;
+        // Creates an object based in the HTML Element prototype
+        var ReusableProto = Object.create(HTMLElement.prototype);
+        // Fires when an instance of the element is created
+        ReusableProto.createdCallback = function() {
+            // Creates the shadow root
+            var shadowRoot = this.createShadowRoot();
+            // Adds a template clone into shadow root
+            var clone = thatDoc.importNode(template, true);
+            shadowRoot.appendChild(clone);
+
+            var submit = shadowRoot.querySelector('.submit');
+            submit.addEventListener('click', function(e){
+                debugger;
+                var list = shadowRoot.querySelector('.list').children
+                var array = []
+                for (var i =0; i < list.length; i++){
+                    array.push(list[i].innerText)
+                }
+                alert(array);
+            });
+            var add = shadowRoot.querySelector('.add')
+
+            add.addEventListener('click', function(e){
+                var list = shadowRoot.querySelector('.list')
+                var val = shadowRoot.querySelector('input').value
+                debugger;
+                var items =[]
+                if(val !== ''){
+                    debugger;
+                    items.push(val)
+                    var item = document.createElement('div')
+                    item.name = val
+                    item.class = 'item'
+                    item.innerHTML = val
+                    list.appendChild(item)
+
+                }
+            });
+
+
+            shadowRoot.appendChild(add);
+            shadowRoot.appendChild(submit);
+
+        };
+        // Fires when an attribute was added, removed, or updated
+        ReusableProto.attributeChangedCallback = function(attr, oldVal, newVal) {
+            // if (attr === 'who') {
+            //     this.setWho(newVal);
+            // }
+        };
+
+        // Registers <hello-world> in the main document
+        window.Reusable = thatDoc.registerElement('hello-world', {
+            prototype: ReusableProto
+        });
+    })(window, document);
+</script>
