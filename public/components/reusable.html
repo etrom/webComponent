@@ -1,10 +1,55 @@
-<template>
-    <form>
-        <input type="text" clas="input" value=""><button class="add">add</button>
-        <div class="list"></div>
-        <input type="submit" value="submit" class="submit"></button>
-    </form>
-</template>
+    <template class="template">
+
+     <!--     <style>
+        .input {
+            border: 4px solid red;
+            padding: 10px;
+            border-radius: 3px;
+            display: inline-block;
+
+
+        }
+        .add {
+            background-color:blue;
+            color:white;
+            padding: 10px;
+            border-radius: 3px;
+            display: inline-block;
+
+
+        }
+        .submit {
+            background-color:blue;
+            color:white;
+            padding: 10px;
+            border-radius: 3px;
+            display: inline-block;
+
+        }
+        .item{
+            margin:10px;
+            padding:10px;
+            border: 1px solid black;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .formstyle{
+            display:block;
+        }
+
+        </style> -->
+        <form>
+           <div class="formstyle">
+                <input type="text" class="input">
+                <button class="add">add</button>
+                <button class="submit">submit</button>
+            <div>
+        </form>
+            <div class="list"></div>
+
+
+    </template>
+
 
 <script>
     (function(window, document, undefined) {
@@ -13,7 +58,7 @@
         // Refers to the "importee", which is src/reusable.html
         var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
         // Gets content from <template>
-        var template = thisDoc.querySelector('template').content;
+        var template = thisDoc.querySelector('.template');
         // Creates an object based in the HTML Element prototype
         var ReusableProto = Object.create(HTMLElement.prototype);
         // Fires when an instance of the element is created
@@ -21,11 +66,13 @@
             // Creates the shadow root
             var shadowRoot = this.createShadowRoot();
             // Adds a template clone into shadow root
-            var clone = thatDoc.importNode(template, true);
+            var clone = thatDoc.importNode(template.content, true);
+            debugger;
             shadowRoot.appendChild(clone);
 
+
             var submit = shadowRoot.querySelector('.submit');
-            submit.addEventListener('click', function(e){
+            submit.addEventListener('click', function(e) {
                 var list = shadowRoot.querySelector('.list').children
                 var array = []
                 for (var i =0; i < list.length; i++){
@@ -33,33 +80,29 @@
                 }
                 alert(array);
             });
-            var add = shadowRoot.querySelector('.add')
+            var add = shadowRoot.querySelector('.add');
 
             add.addEventListener('click', function(e){
-                var list = shadowRoot.querySelector('.list')
-                var val = shadowRoot.querySelector('input').value
-                var items =[]
-                if(val !== ''){
-                    items.push(val)
-                    var item = document.createElement('div')
-                    item.name = val
-                    item.class = 'item'
-                    item.innerHTML = val
-                    list.appendChild(item)
+
+                var list = shadowRoot.querySelector('.list');
+                var val = shadowRoot.querySelector('input').value;
+                var items =[];
+                if(val !== '') {
+                    items.push(val);
+                    var item = document.createElement('div');
+                    item.name = val;
+                    item.className = 'item';
+                    item.innerHTML = val;
+                    list.appendChild(item);
 
                 }
             });
 
 
-            shadowRoot.appendChild(add);
-            shadowRoot.appendChild(submit);
-
         };
         // Fires when an attribute was added, removed, or updated
         ReusableProto.attributeChangedCallback = function(attr, oldVal, newVal) {
-            // if (attr === 'who') {
-            //     this.setWho(newVal);
-            // }
+
         };
 
         // Registers <hello-world> in the main document
