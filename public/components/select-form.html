@@ -1,0 +1,153 @@
+<template>
+  <style>
+  .taginput_container {
+  position: relative;
+  width: 60%;
+  font-family: 'Arial' sans-serif;
+  font-size: .9em;
+/*  border: 1px solid #ccc;
+*/  height: 30px;
+  top: 50px;
+  margin-bottom: 50px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.taginput_container input {
+  position: absolute;
+  height: 30px;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 4px;
+/*  border: 0 solid transparent;
+*/  outline: none;
+}
+
+.taginput_container .taginput_tags {
+  position: absolute;
+  left: 4px;
+}
+
+.taginput_container .taginput_tags .taginput_tag {
+  display: inline-block;
+  margin-right: 2px;
+  padding: 3px;
+  margin-bottom: 2px;
+  background-color: #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.taginput_container .taginput_tags .taginput_tag .taginput_x {
+  font-size: 1em;
+  padding-left: 2px;
+  color: #777;
+}
+
+</style>
+
+<!--   <form>
+    <div class="formstyle">
+      <input type="text" class="input">
+      <button type="button" class="add">add</button>
+      <button type="button" class="submit">submit</button>
+    </div>
+  </form>
+  <div class="list"></div>
+ -->
+  <div id="container">
+    <div class="taginput_container" style="height: 30px;">
+      <input type="text" value="" class="input" style="left: 0px;">
+      <div class="taginput_tags">
+      </div>
+    </div>
+
+  </div>
+<button type="button" class="add">add</button>
+<button type="button" class="submit">submit</button>
+
+
+</template>
+
+<script>
+  document.registerElement('select-form', {
+    prototype: Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        enumerable: false,
+        value: function () {
+          // select the document being imoprted into index.html
+          var importDocument = document.querySelector('#importId').import;
+          // select the template
+          var template = importDocument.querySelector('template');
+          // create a shadowroot
+          var shadowRoot = this.createShadowRoot();
+          // copy the template
+          var clone = importDocument.importNode(template.content, true);
+          // append template to the shadowroot
+          shadowRoot.appendChild(clone);
+
+          var add = shadowRoot.querySelector('.add');
+          var submit = shadowRoot.querySelector('.submit');
+
+          var items = [];
+          var itemIdx = 0;
+
+          submit.onclick = function() {
+            var list = shadowRoot.querySelector('.taginput_tags')
+            // this is what could be submitted...
+            alert(items);
+
+            items =[];
+            list.innerHTML = "";
+            itemIdx = 0;
+          };
+
+          add.onclick = function() {
+            var list = shadowRoot.querySelector('.taginput_tags');
+            var input = shadowRoot.querySelector('input');
+            var val = input.value;
+            var item;
+
+            if (val !== '') {
+              items.push(val);
+
+              // create added item
+              item = document.createElement('div');
+              item.className = 'taginput_tag';
+              span = document.createElement('span')
+              span.innerHTML = val;
+              item.appendChild(span);
+              input.value = "";
+
+              //create the remove button on the added item
+              removeX = document.createElement('span');
+              removeX.class= "taginput_x"
+              removeX.innerHTML = "x"
+              removeX.id = itemIdx;
+              removeX.addEventListener('click', removeItem);
+              item.appendChild(removeX);
+
+
+              list.appendChild(item);
+              itemIdx += 1;
+            }
+          };
+
+          var removeItem = function(e) {
+            idx = e.currentTarget.id;
+            items.splice(Number(idx), 1);
+            e.currentTarget.parentElement.remove();
+          }
+
+
+
+        }
+      }
+    })
+  });
+</script>
