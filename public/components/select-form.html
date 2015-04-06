@@ -1,20 +1,37 @@
 <template>
   <style>
+
+  .container{
+    width: 60%;
+  }
+  .add, .submit {
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    color: white;
+    margin-top: 5px;
+    background-color: rgb(0, 148, 255);
+  }
+
+  .add:hover, .submit:hover{
+    background-color: rgb(17, 119, 192);
+    cursor: pointer;
+  }
+
   .taginput_container {
-  position: relative;
-  width: 60%;
-  font-family: 'Arial' sans-serif;
-  font-size: .9em;
-/*  border: 1px solid #ccc;
-*/  height: 30px;
-  top: 50px;
-  margin-bottom: 50px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    position: relative;
+    font-family: 'Arial' sans-serif;
+    font-size: .9em;
+  /*  border: 1px solid #ccc;
+  */  height: 30px;
+    top: 50px;
+    margin-bottom: 50px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .taginput_container input {
@@ -33,40 +50,32 @@
   left: 4px;
 }
 
-.taginput_container .taginput_tags .taginput_tag {
+.taginput_tags .taginput_tag {
+  font-family: 'Arial' sans-serif;
   display: inline-block;
   margin-right: 2px;
-  padding: 3px;
-  margin-bottom: 2px;
+  padding: 5px;
+  margin: 5px;
   background-color: #ccc;
   border-radius: 3px;
   cursor: pointer;
+  color:#777;
 }
 
-.taginput_container .taginput_tags .taginput_tag .taginput_x {
-  font-size: 1em;
-  padding-left: 2px;
+.taginput_x {
+  font-size: .85em;
+  padding-left: 11px;
+  padding-right: 5px;
   color: #777;
 }
 
 </style>
-
-<!--   <form>
-    <div class="formstyle">
-      <input type="text" class="input">
-      <button type="button" class="add">add</button>
-      <button type="button" class="submit">submit</button>
-    </div>
-  </form>
-  <div class="list"></div>
- -->
-  <div id="container">
+  <div class="container">
     <div class="taginput_container" style="height: 30px;">
       <input type="text" value="" class="input" style="left: 0px;">
-      <div class="taginput_tags">
-      </div>
-    </div>
 
+    </div>
+    <div class="taginput_tags"></div>
   </div>
 <button type="button" class="add">add</button>
 <button type="button" class="submit">submit</button>
@@ -126,7 +135,7 @@
 
               //create the remove button on the added item
               removeX = document.createElement('span');
-              removeX.class= "taginput_x"
+              removeX.className= "taginput_x"
               removeX.innerHTML = "x"
               removeX.id = itemIdx;
               removeX.addEventListener('click', removeItem);
