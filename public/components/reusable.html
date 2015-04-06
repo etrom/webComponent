@@ -1,14 +1,12 @@
 <template>
-  <div>awesomeness</div>
-
-   <form>
-           <div class="formstyle">
-                <input type="text" class="input">
-                <button type="button" class="add">add</button>
-                <button type="button" class="submit">submit</button>
-            </div>
-        </form>
-            <div class="list"></div>
+  <form>
+    <div class="formstyle">
+      <input type="text" class="input">
+      <button type="button" class="add">add</button>
+      <button type="button" class="submit">submit</button>
+    </div>
+  </form>
+  <div class="list"></div>
 
 
 </template>
@@ -36,15 +34,21 @@
           var submit = shadowRoot.querySelector('.submit');
 
           var items = [];
+          var itemIdx = 0;
 
           submit.onclick = function() {
+            var list = shadowRoot.querySelector('.list')
             // this is what could be submitted...
             alert(items);
+
+            items =[];
+            list.innerHTML = "";
+            itemIdx = 0;
           };
 
           add.onclick = function() {
-            var list = shadowRoot.querySelector('.list')
-            var input = shadowRoot.querySelector('input')
+            var list = shadowRoot.querySelector('.list');
+            var input = shadowRoot.querySelector('input');
             var val = input.value;
             var item;
             if(val !== '') {
@@ -54,16 +58,23 @@
               item.name = val;
               item.className = 'item';
               item.innerHTML = val;
-              input.value = null;
-              //add remove element
-              //element.addEventListener('click', removeItem)
+              input.value = "";
+              removeX = document.createElement('span');
+              removeX.innerHTML = "x"
+              removeX.id = itemIdx;
+              removeX.addEventListener('click', removeItem);
+              item.appendChild(removeX);
+
 
               list.appendChild(item);
+              itemIdx += 1;
             }
           };
 
-          var removeItem = function() {
-
+          var removeItem = function(e) {
+            idx = e.currentTarget.id;
+            items.splice(Number(idx),1);
+            e.currentTarget.parentElement.remove();
           }
 
         }
