@@ -1,99 +1,73 @@
-    <template>
+<template>
+  <div>awesomeness</div>
 
-     <!--     <style>
-        .input {
-            border: 4px solid red;
-            padding: 10px;
-            border-radius: 3px;
-            display: inline-block;
-
-
-        }
-        .add {
-            background-color:blue;
-            color:white;
-            padding: 10px;
-            border-radius: 3px;
-            display: inline-block;
-
-
-        }
-        .submit {
-            background-color:blue;
-            color:white;
-            padding: 10px;
-            border-radius: 3px;
-            display: inline-block;
-
-        }
-        .item{
-            margin:10px;
-            padding:10px;
-            border: 1px solid black;
-            border-radius: 3px;
-            display: inline-block;
-        }
-        .formstyle{
-            display:block;
-        }
-
-        </style> -->
-        <form>
+   <form>
            <div class="formstyle">
                 <input type="text" class="input">
-                <button class="add">add</button>
-                <button class="submit">submit</button>
-            <div>
+                <button type="button" class="add">add</button>
+                <button type="button" class="submit">submit</button>
+            </div>
         </form>
             <div class="list"></div>
 
-    </template>
 
+</template>
 
 <script>
-    document.registerElement('hello-world', {
+  document.registerElement('hello-world', {
     prototype: Object.create(HTMLElement.prototype, {
-        createdCallback: {
-            enumerable: false,
-            value: function () {
-                var importDocument = document.querySelector('#importId').import
-                var thisDoc = (importDocument.querySelector('script') || importDocument.querySelector('script')).ownerDocument;
-                var template = thisDoc.querySelector('template');
+      createdCallback: {
+        enumerable: false,
+        value: function () {
+          //
+          var importDocument = document.querySelector('#importId').import;
+          //
+          var thisDoc = importDocument.querySelector('script').ownerDocument;
+          //
+          var template = thisDoc.querySelector('template');
+          //
+          var shadowRoot = this.createShadowRoot();
+          //
+          var clone = thisDoc.importNode(template.content, true);
+          //
+          shadowRoot.appendChild(clone);
 
-                var clone = thisDoc.importNode(template.content, true);
-                var shadowRoot = this.createShadowRoot();
+          var add = shadowRoot.querySelector('.add');
+          var submit = shadowRoot.querySelector('.submit');
 
-                shadowRoot.appendChild(clone);
+          var items = [];
 
+          submit.onclick = function() {
+            // this is what could be submitted...
+            alert(items);
+          };
 
-                var submit = shadowRoot.querySelector('.submit');
-                submit.addEventListener('click', function(e) {
-                    var list = shadowRoot.querySelector('.list').children
-                    var array = []
-                    for (var i =0; i < list.length; i++){
-                        array.push(list[i].innerText)
-                    }
-                    alert(array);
-                });
-                var items =[];
-                var add = shadowRoot.querySelector('.add');
-                add.addEventListener('click', function(e){
-                    var list = shadowRoot.querySelector('.list')
-                    debugger;
-                    var val = shadowRoot.querySelector('input').value;
-                    if(val !== '') {
-                        items.push(val);
-                        var item = document.createElement('div');
-                        item.name = val;
-                        item.className = 'item';
-                        item.innerHTML = val;
-                        list.appendChild(item);
+          add.onclick = function() {
+            var list = shadowRoot.querySelector('.list')
+            var input = shadowRoot.querySelector('input')
+            var val = input.value;
+            var item;
+            if(val !== '') {
+              items.push(val);
 
-                    }
-                });
+              item = document.createElement('div');
+              item.name = val;
+              item.className = 'item';
+              item.innerHTML = val;
+              input.value = null;
+              //add remove element
+              //element.addEventListener('click', removeItem)
+
+              list.appendChild(item);
             }
-        }
-    })
-})
+          };
 
+          var removeItem = function() {
+
+          }
+
+        }
+      }
+    })
+  });
 </script>
